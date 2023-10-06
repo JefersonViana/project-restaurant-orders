@@ -62,7 +62,7 @@ class MenuBuilder:
 
 # menu = MenuBuilder(
 #         data_path=DATA_PATH,
-#         inventory_path="tests/mocks/inventory_base_data_2.csv",
+#         inventory_path="tests/mocks/inventory_base_data_2.csv"
 #     ).get_main_menu()
 # print(menu)
 # IMPLEMENTAÇÃO USANDO UM FOR DE FORMA COMUM!!
