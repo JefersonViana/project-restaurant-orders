@@ -25,46 +25,22 @@ class MenuBuilder:
 
         self.inventory.consume_recipe(curr_dish.recipe)
 
+    # IMPLEMENTAÇÃO MENOS VERBOSA!!
     def get_main_menu(self, restriction=None) -> List[Dict]:
         dishes: Set[Dish] = self.menu_data.dishes
-        # print(self.inventory.inventory)
-        # for x, y in self.inventory.inventory.items():
-        #     if y == 300:
-        #         return []
-        if restriction:
-            return [
-                {
+        menu_diches = []
+        for dish in dishes:
+            if (self.inventory.check_recipe_availability(dish.recipe)
+                    and restriction not in dish.get_restrictions()):
+                menu_diches.append({
                     "dish_name": dish.name,
                     "price": dish.price,
                     "ingredients": dish.get_ingredients(),
                     "restrictions": dish.get_restrictions()
-                }
-                for dish in dishes
-                if restriction not in dish.get_restrictions()
-                if self.inventory.check_recipe_availability(
-                    dish.recipe
-                )
-            ]
-        else:
-            return [
-                {
-                    "dish_name": dish.name,
-                    "price": dish.price,
-                    "ingredients": dish.get_ingredients(),
-                    "restrictions": dish.get_restrictions()
-                }
-                for dish in dishes
-                if self.inventory.check_recipe_availability(
-                    dish.recipe
-                )
-            ]
+                })
+        return menu_diches
 
 
-# menu = MenuBuilder(
-#         data_path=DATA_PATH,
-#         inventory_path="tests/mocks/inventory_base_data_2.csv"
-#     ).get_main_menu()
-# print(menu)
 # IMPLEMENTAÇÃO USANDO UM FOR DE FORMA COMUM!!
 # def get_main_menu(self, restriction=None) -> List[Dict]:
 #     data = list()
@@ -87,3 +63,35 @@ class MenuBuilder:
 #                     "restrictions": dish.get_restrictions()
 #                 })
 #     return data
+
+# IMPLEMENTAÇÃO MENOS VERBOSA!!
+# IMPLEMENTAÇÃO MAIS VERBOSA!!
+# def get_main_menu(self, restriction=None) -> List[Dict]:
+#     dishes: Set[Dish] = self.menu_data.dishes
+#     if restriction:
+#         return [
+#             {
+#                 "dish_name": dish.name,
+#                 "price": dish.price,
+#                 "ingredients": dish.get_ingredients(),
+#                 "restrictions": dish.get_restrictions()
+#             }
+#             for dish in dishes
+#             if restriction not in dish.get_restrictions()
+#             if self.inventory.check_recipe_availability(
+#                 dish.recipe
+#             )
+#         ]
+#     else:
+#         return [
+#             {
+#                 "dish_name": dish.name,
+#                 "price": dish.price,
+#                 "ingredients": dish.get_ingredients(),
+#                 "restrictions": dish.get_restrictions()
+#             }
+#             for dish in dishes
+#             if self.inventory.check_recipe_availability(
+#                 dish.recipe
+#             )
+#         ]
