@@ -1,7 +1,8 @@
-from typing import Dict, List
+from typing import Dict, List, Set
 
 from services.inventory_control import InventoryMapping
 from services.menu_data import MenuData
+from models.dish import Dish
 
 DATA_PATH = "data/menu_base_data.csv"
 INVENTORY_PATH = "data/inventory_base_data.csv"
@@ -24,6 +25,49 @@ class MenuBuilder:
 
         self.inventory.consume_recipe(curr_dish.recipe)
 
-    # Req 4
     def get_main_menu(self, restriction=None) -> List[Dict]:
-        pass
+        dishes: Set[Dish] = self.menu_data.dishes
+        if restriction:
+            return [
+                {
+                    "dish_name": dish.name,
+                    "price": dish.price,
+                    "ingredients": dish.get_ingredients(),
+                    "restrictions": dish.get_restrictions()
+                }
+                for dish in dishes
+                if restriction not in dish.get_restrictions()
+            ]
+        else:
+            return [
+                {
+                    "dish_name": dish.name,
+                    "price": dish.price,
+                    "ingredients": dish.get_ingredients(),
+                    "restrictions": dish.get_restrictions()
+                }
+                for dish in dishes
+            ]
+
+# IMPLEMENTAÇÃO USANDO UM FOR DE FORMA COMUM!!
+# def get_main_menu(self, restriction=None) -> List[Dict]:
+#     data = list()
+#     dishes: Set[Dish] = self.menu_data.dishes
+#     if restriction:
+#         for dish in dishes:
+#             if restriction not in dish.get_restrictions():
+#                 data.append({
+#                     "dish_name": dish.name,
+#                     "price": dish.price,
+#                     "ingredients": dish.get_ingredients(),
+#                     "restrictions": dish.get_restrictions()
+#                 })
+#     else:
+#         for dish in dishes:
+#             data.append({
+#                     "dish_name": dish.name,
+#                     "price": dish.price,
+#                     "ingredients": dish.get_ingredients(),
+#                     "restrictions": dish.get_restrictions()
+#                 })
+#     return data
