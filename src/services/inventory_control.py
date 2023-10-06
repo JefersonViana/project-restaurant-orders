@@ -25,19 +25,19 @@ class InventoryMapping:
         self.inventory = read_csv_inventory(inventory_file_path)
 
     def check_recipe_availability(self, recipe: Recipe) -> bool:
-        for x, y in recipe.items():
-            if x not in self.inventory or self.inventory[x] < y:
+        for ing, qtd in recipe.items():
+            if ing not in self.inventory or self.inventory[ing] < qtd:
                 return False
         return True
 
     def consume_recipe(self, recipe: Recipe) -> None:
         # if self.check_recipe_availability(recipe):
         dict_ingredients = {}
-        for x, y in recipe.items():
-            if self.inventory[x] - y < 0:
+        for ing, qtd in recipe.items():
+            if self.inventory[ing] - qtd < 0:
                 raise ValueError
             else:
-                dict_ingredients[x] = y
+                dict_ingredients[ing] = qtd
         for one, two in dict_ingredients.items():
             self.inventory[one] -= two
         # else:
