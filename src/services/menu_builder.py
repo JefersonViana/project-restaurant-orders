@@ -42,7 +42,7 @@ class MenuBuilder:
                 for dish in dishes
                 if restriction not in dish.get_restrictions()
                 if self.inventory.check_recipe_availability(
-                    dish.get_all_recipes()
+                    dish.recipe
                 )
             ]
         else:
@@ -55,7 +55,7 @@ class MenuBuilder:
                 }
                 for dish in dishes
                 if self.inventory.check_recipe_availability(
-                    dish.get_all_recipes()
+                    dish.recipe
                 )
             ]
 
