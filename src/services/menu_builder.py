@@ -27,6 +27,10 @@ class MenuBuilder:
 
     def get_main_menu(self, restriction=None) -> List[Dict]:
         dishes: Set[Dish] = self.menu_data.dishes
+        # print(self.inventory.inventory)
+        # for x, y in self.inventory.inventory.items():
+        #     if y == 300:
+        #         return []
         if restriction:
             return [
                 {
@@ -37,6 +41,9 @@ class MenuBuilder:
                 }
                 for dish in dishes
                 if restriction not in dish.get_restrictions()
+                if self.inventory.check_recipe_availability(
+                    dish.get_all_recipes()
+                )
             ]
         else:
             return [
@@ -47,8 +54,17 @@ class MenuBuilder:
                     "restrictions": dish.get_restrictions()
                 }
                 for dish in dishes
+                if self.inventory.check_recipe_availability(
+                    dish.get_all_recipes()
+                )
             ]
 
+
+# menu = MenuBuilder(
+#         data_path=DATA_PATH,
+#         inventory_path="tests/mocks/inventory_base_data_2.csv",
+#     ).get_main_menu()
+# print(menu)
 # IMPLEMENTAÇÃO USANDO UM FOR DE FORMA COMUM!!
 # def get_main_menu(self, restriction=None) -> List[Dict]:
 #     data = list()

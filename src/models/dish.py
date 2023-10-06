@@ -39,3 +39,6 @@ class Dish:
 
     def get_ingredients(self):
         return set(self.recipe.keys())
+
+    def get_all_recipes(self):
+        return {x: y for x, y in self.recipe.items()}
